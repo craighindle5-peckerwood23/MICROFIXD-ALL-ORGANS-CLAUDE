@@ -1,0 +1,22 @@
+# Render Blueprint for Microfixd.
+# It builds the existing portable Docker image; all sensitive values are requested in the Render dashboard.
+services:
+  - type: web
+    runtime: docker
+    name: microfixd-governed
+    region: virginia
+    branch: main
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /readyz
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: REQUIRE_DURABLE_MEMORY
+        value: "true"
+      - key: MICROFIXD_ENABLE_LOCAL_SCREENSHOTS
+        value: "false"
+      - key: ADMIN_API_KEY
+        sync: false
+      - key: SUPABASE_DB_URL
+        sync: false

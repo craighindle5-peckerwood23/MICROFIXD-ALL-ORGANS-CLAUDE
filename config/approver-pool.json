@@ -1,0 +1,4 @@
+{
+  "note": "Real approver pool. Add identities here via a reviewed change -- there is deliberately no runtime API to add yourself to this pool. Empty array = pool not configured, which is treated as fail-closed for governed decisions: decideApproval() will refuse to grant approval to anyone until this list has real identities in it.",
+  "approvers": []
+}

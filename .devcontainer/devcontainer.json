@@ -1,0 +1,17 @@
+{
+  "name": "Microfixd Governed Runtime",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:22-bookworm",
+  "remoteUser": "node",
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "Microfixd operations console",
+      "onAutoForward": "notify"
+    }
+  },
+  "postCreateCommand": "npm ci --ignore-scripts",
+  "containerEnv": {
+    "REQUIRE_DURABLE_MEMORY": "false",
+    "MICROFIXD_EMERGENCY_STOP": "false"
+  }
+}

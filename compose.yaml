@@ -1,0 +1,15 @@
+services:
+  microfixd:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: "3000"
+      ADMIN_API_KEY: ${ADMIN_API_KEY:?Set ADMIN_API_KEY in your local environment}
+      REQUIRE_DURABLE_MEMORY: "${REQUIRE_DURABLE_MEMORY:-false}"
+      SUPABASE_DB_URL: ${SUPABASE_DB_URL:-}
+      MICROFIXD_EMERGENCY_STOP: "${MICROFIXD_EMERGENCY_STOP:-false}"
+    restart: unless-stopped

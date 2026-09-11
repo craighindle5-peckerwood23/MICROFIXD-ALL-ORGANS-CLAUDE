@@ -1,0 +1,33 @@
+# Local environment and secret configurations (Protecting API Keys & credentials)
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*
+!.env.example
+
+# Build, dependency, and log files
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+
+.microfixd/
+artifacts-*.png
+.data/
+data/
+level6-mission-control.png
+
+# Never commit distributable zips or the dead, orphaned microfyxd
+# standalone monorepo -- it has its own broken build (no tsconfig in
+# apps/runtime) and has caused real Railway deploy failures when
+# accidentally included in a repo/build root.
+*.zip
+microfyxd/
+
+# Firebase was removed (backend is Supabase-only); block accidental
+# recommits of the old client config.
+firebase-applet-config.json

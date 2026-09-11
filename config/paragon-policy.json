@@ -1,0 +1,6 @@
+{
+  "note": "Real policy-as-code for governance.ts's ParagonDissector. Change this file via a reviewed PR, then run `npm run audit:policy` (also wired into CI at .github/workflows/policy-audit.yml) before merging -- it replays a fixed set of golden cases through the new policy and fails if any known-dangerous case would now be allowed.",
+  "policyVersion": "2.2.0",
+  "highRiskTerms": "(?:secret|token|credential|password|api[_ -]?key|deploy|production|database migration|schema|dependency|package\\.json|dockerfile|railway|azure|gcp|github|git push|terraform|cloud)",
+  "forbiddenTerms": "(?:disable paragon|bypass paragon|override doctrine|exfiltrat|rm\\s+-rf|curl\\s+.*\\|\\s*(?:sh|bash)|child_process|process\\.env|eval\\(|new Function)"
+}

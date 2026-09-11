@@ -1,0 +1,53 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "experimentalDecorators": true,
+    "useDefineForClassFields": false,
+    "module": "ESNext",
+    "lib": [
+      "ES2022",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "allowJs": true,
+    "jsx": "react-jsx",
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@microfyxd/core": [
+        "./microfyxd/packages/core/index.ts"
+      ],
+      "@microfyxd/shared": [
+        "./microfyxd/packages/shared/index.ts"
+      ],
+      "@microfyxd/agent": [
+        "./microfyxd/packages/agent/index.ts"
+      ],
+      "@microfyxd/watchdog": [
+        "./microfyxd/packages/watchdog/index.ts"
+      ],
+      "@microfyxd/phenotype": [
+        "./microfyxd/packages/phenotype/index.ts"
+      ],
+      "@microfyxd/infra": [
+        "./microfyxd/packages/infra/index.ts"
+      ],
+      "@microfyxd/memory": [
+        "./microfyxd/packages/memory/index.ts"
+      ],
+      "@microfyxd/doctrine": [
+        "./microfyxd/packages/doctrine/index.ts"
+      ],
+      "@microfyxd/sandbox": [
+        "./microfyxd/packages/sandbox/index.ts"
+      ]
+    },
+    "allowImportingTsExtensions": true,
+    "noEmit": true
+  }
+}

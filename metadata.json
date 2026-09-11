@@ -1,0 +1,6 @@
+{
+  "name": "Microfyxd AI Enterprise System",
+  "description": "Production-grade monorepo architecture and interactive cockpit for Microfyxd—a self-healing, phenotype-driven multi-agent system powered by LangGraph.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
