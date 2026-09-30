@@ -13,7 +13,7 @@
 // the UI look more alive than the backend actually is.
 
 import type { RunRecord, StepRecord } from '../../autonomy/types.ts';
-import { request } from './api.ts';
+import { request, apiUrl } from './api.ts';
 
 export type MicrofixedEvent =
   | { type: 'graph.started'; missionId: string }
@@ -48,7 +48,7 @@ export function streamRun(
     try {
       const { token } = await request<{ token: string }>(`/api/autonomy/runs/${runId}/stream-token`, adminKey, tenantId, { method: 'POST' });
       if (closed) return;
-      source = new EventSource(`/api/autonomy/runs/${runId}/stream?token=${encodeURIComponent(token)}&tenantId=${encodeURIComponent(tenantId)}`);
+      source = new EventSource(apiUrl(`/api/autonomy/runs/${runId}/stream?token=${encodeURIComponent(token)}&tenantId=${encodeURIComponent(tenantId)}`));
       const on = (name: MicrofixedEvent['type']) => {
         source!.addEventListener(name, (e: MessageEvent) => {
           try { onEvent(JSON.parse(e.data)); } catch { /* ignore malformed frame */ }

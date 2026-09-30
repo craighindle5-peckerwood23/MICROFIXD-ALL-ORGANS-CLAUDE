@@ -15,6 +15,31 @@ dotenv.config({ path: '.env.local', override: false });
 async function startServer(): Promise<void> {
   const app = express();
   app.disable('x-powered-by');
+
+  // Cross-origin access for the standalone Microfixd OS frontend --
+  // this backend can be run as its own service ("the wall outlet") with
+  // the frontend built and deployed separately ("the TV") and pointed at
+  // it via VITE_API_BASE_URL. Allowed origins are explicit-listed via
+  // MICROFIXD_CORS_ORIGINS (comma-separated); unset means allow any
+  // origin, since every mutating route is already gated by
+  // x-microfixd-admin-key -- CORS here only controls which browser pages
+  // may *read* the response, it grants no additional server access.
+  const allowedOrigins = (process.env.MICROFIXD_CORS_ORIGINS || '').split(',').map((o) => o.trim()).filter(Boolean);
+  app.use((req, res, next) => {
+    const origin = req.headers.origin;
+    if (origin && (allowedOrigins.length === 0 || allowedOrigins.includes(origin))) {
+      res.setHeader('Access-Control-Allow-Origin', origin);
+      res.setHeader('Vary', 'Origin');
+      res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, x-microfixd-admin-key, x-microfixd-tenant');
+    }
+    if (req.method === 'OPTIONS') {
+      res.sendStatus(204);
+      return;
+    }
+    next();
+  });
+
   // A larger, dedicated limit for uploads (photos/zips/OBD2 exports), applied
   // BEFORE the general parser so it takes effect only for this one path.
   app.use('/api/autonomy/upload', express.json({ limit: process.env.UPLOAD_BODY_LIMIT || '25mb' }));

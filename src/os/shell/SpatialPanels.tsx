@@ -10,7 +10,7 @@
 
 import { useEffect, useState, type ReactNode } from 'react';
 import { useOS } from '../state/os-context.tsx';
-import { request } from '../state/api.ts';
+import { request, apiUrl } from '../state/api.ts';
 import { audioManager } from './audio-manager.ts';
 
 function StatusRow({ label, value, tone = 'neutral' }: { label: string; value: string; tone?: 'good' | 'bad' | 'neutral' }) {
@@ -44,7 +44,7 @@ function useReadyz(adminKey: string) {
     let cancelled = false;
     (async () => {
       try {
-        const res = await fetch('/readyz', { headers: { 'x-microfixd-admin-key': adminKey } });
+        const res = await fetch(apiUrl('/readyz'), { headers: { 'x-microfixd-admin-key': adminKey } });
         const body = await res.json().catch(() => ({}));
         if (!cancelled) setState({ ok: res.ok, httpStatus: res.status, body, error: null });
       } catch (err) {

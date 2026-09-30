@@ -10,6 +10,7 @@
 // a separate audio system.
 
 import { useEffect, useRef, useState } from 'react';
+import { apiUrl } from '../state/api.ts';
 import { useHolographicHead } from '../shell/use-holographic-head.ts';
 import { audioManager } from '../shell/audio-manager.ts';
 
@@ -34,12 +35,12 @@ export function BootExperience({ adminKey, tenantId, onDone }: Props) {
 
   // Real backend check, not decorative.
   useEffect(() => {
-    fetch('/readyz').then((r) => r.json()).then((body) => setStatus(body.status === 'ok' ? 'nominal' : 'degraded')).catch(() => setStatus('degraded'));
+    fetch(apiUrl('/readyz')).then((r) => r.json()).then((body) => setStatus(body.status === 'ok' ? 'nominal' : 'degraded')).catch(() => setStatus('degraded'));
   }, []);
 
   useEffect(() => {
     if (stage !== 3 || !adminKey) return;
-    fetch('/api/autonomy/usage-report', { headers: { 'x-microfixd-admin-key': adminKey, 'x-microfixd-tenant': tenantId } })
+    fetch(apiUrl('/api/autonomy/usage-report'), { headers: { 'x-microfixd-admin-key': adminKey, 'x-microfixd-tenant': tenantId } })
       .then((r) => r.json())
       .then((body) => setRecentCount(`${body?.inMemoryWindow?.eventCount ?? 0} events recorded since last restart.`))
       .catch(() => setRecentCount('Recent activity unavailable.'));

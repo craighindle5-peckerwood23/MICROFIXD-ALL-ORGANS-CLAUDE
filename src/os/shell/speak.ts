@@ -9,13 +9,15 @@
 // which voice path (or neither) succeeds -- this function never gates
 // text display on voice success.
 
+import { apiUrl } from '../state/api.ts';
+
 export type SpeakResult = { played: boolean; method: 'elevenlabs' | 'browser-tts' | 'none'; error?: string };
 
 export async function speak(text: string, adminKey: string, tenantId: string): Promise<SpeakResult> {
   if (!text.trim()) return { played: false, method: 'none' };
 
   try {
-    const response = await fetch('/api/autonomy/voice/speak', {
+    const response = await fetch(apiUrl('/api/autonomy/voice/speak'), {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'x-microfixd-admin-key': adminKey, 'x-microfixd-tenant': tenantId },
       body: JSON.stringify({ text }),
